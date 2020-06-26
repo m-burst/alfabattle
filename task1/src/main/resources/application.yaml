@@ -1,0 +1,70 @@
+server.port: 8080
+
+application:
+  alfa-api:
+    client-id: "46471650-6420-49a1-95a5-a09e2cc6d849"
+    client-secret: "K2eY0bQ8kE4gX2sT3oQ3xW8nH7aI3fG5jN7dX8kK7oP4uN5sB3"
+    private-key: |-
+      -----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDr7BR2v7WfJvqD
+      GDsTofPNHjysTbmOzn9+kzkY6gZUV+BPnTZd1Idd1gYNPc4+w2LHacF886mnMNl0
+      4lBuT5c9DoGPy7wVGSR3qBFItBBsssN78LYgOEbG4Ud5BZW9vs8v/DuysDEfRI5U
+      QmCf/y0PkP0VqgU3o1pSTfh5v+2iNkmlvJ2HH55YW0Fe2vES0RJsbJObZftDZUbf
+      o+oLBB2B03B/olQ3x0hii0b7isQmnXGwOp/tTwjlWhPWwTusBjp8Qe5OEe0Q0J3k
+      kupGIWpVJtKzFeE7kI6h+RR5cF+dTEP39q5J3Cpf7oN2FLodZw3c/icEuOVUzQzs
+      /q3x8hAbAgMBAAECggEBAOavNutOVXdDk9yvysRNrai5kjYg4foDbKMFreTwoDPE
+      oW73mHtzHtHgPpagApVYU7QNcsaNMyxqFZe221KhvI5VKtbCLiyrIv9ldVET0KOY
+      wJDmNA+ZN4usKEjr7xlUBB81keINalranBlDtlt8FkGMUgvm7acTsXOdDgNuahwa
+      /FwMdGGyXcDoOP+iINVSNFMDRApZcLk69b5C8OnmF69fL6k2Wk899LdYOrW/vUsc
+      T/Ndbtqq99RFWi5xSBNNyq/ch3TcOafeCJBjygonzDArCcGJXFoZK9D6ovhKq530
+      6m8+rGBWsrcc2/kpDAPSvAgXqLJL+Lkk9LduRooin3ECgYEA/Zx2D3jruxsNwRDn
+      rb/mm1AnKfd4lee31hd4r/EJ39N8WegkwbKYkO9cMxjpTFMijUvjYaFErbhG9ZAJ
+      ozgm0p/7DyBJFI4pMBxcTWCUYUUl2nqTxuy6JXpcvP4LwtDV2AA3Xu8oe2wi72ME
+      aknWVpE5/vs7zcdJ22XGId9g60UCgYEA7iT3AdGMpevCYkFtAEq/Br7bQacyfLOX
+      EsT8d1bzjBQmd2bx1VMDghTD3OJC68k/KhiPc1ETIH6KpLBYD1JtlWU/nKBmI123
+      9TsYwuuRX1oiymOf34FmDx4Tva7vuP33DCFB99SU2MFp2e3Lnn+GpkQ3lt8JTurZ
+      pKzVLbhDE98CgYAJn8FfLvCLJiisde7Eyi5/IFiMICcEUUnJpxReYOBGDSl/4+5Z
+      J2TgwySVj9FyowkBoaqcTtljWkXfFbs35W6buZR2a3w6enaXq8vY59xZoJ0iIFqx
+      RtR9jZotVdquZuxmiQOQ57R6koz01qYZPnoSyOoRggkv8usbl04ghPCRnQKBgH5m
+      Tli/wZhbj1wZf+J0yfmpmbS6Ktj3dYs31Qz+sNw74cLkeB2TJzyHCwKVcZG2ynjs
+      ek9py+4mXC5XjxXq2VE/YUkf9bZ1yus1x8nFwO5MaETmJfg6tVH20+GNFZ4p5lOg
+      32PMiIiX+Df8uGPTKkPb12mTzlv92TFHrwrKT4gfAoGBALGSWshwqTQAItgVXU3z
+      FQ3TguhYVr2rgU/FuOewdMGav5OG3Et2UsZiwCJbdMYFLfI494eIA3DfpC9Wkv8L
+      ow27jZkrFrZBuccZZtWexKami0iaJtua6X0x85GSu20b3b8Y3HCj85jrH+L1/rX7
+      Uv8rJmf4I+Ps7ShujIpqc8Dd
+      -----END PRIVATE KEY-----
+    certificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIFIzCCAwugAwIBAgICEBkwDQYJKoZIhvcNAQELBQAwgakxCzAJBgNVBAYTAlJV
+      MQ8wDQYDVQQIDAbQnNCh0JoxFTATBgNVBAcMDNCc0L7RgdC60LLQsDEcMBoGA1UE
+      CgwT0JDQu9GM0YTQsCDQkdCw0L3QujEOMAwGA1UEAwwFYXBpY2ExJTAjBgkqhkiG
+      9w0BCQEWFmFwaXN1cHBvcnRAYWxmYWJhbmsucnUxDzANBggqhQMDgQMBARIBMDEM
+      MAoGBSqFA2QDEgEwMB4XDTE4MDQyMzA2NDIwN1oXDTMxMTIzMTA2NDIwN1owgaAx
+      CzAJBgNVBAYTAlJVMQwwCgYDVQQIDANNU0sxEjAQBgNVBAoMCUFsZmEgQmFuazEW
+      MBQGA1UEAwwNYXBpZGV2ZWxvcGVyczElMCMGCSqGSIb3DQEJARYWYXBpc3VwcG9y
+      dEBhbGZhYmFuay5ydTEPMA0GCCqFAwOBAwEBEgEwMQwwCgYFKoUDZAMSATAxETAP
+      BgorBgEEAYGCaWQBDAEwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+      6+wUdr+1nyb6gxg7E6HzzR48rE25js5/fpM5GOoGVFfgT502XdSHXdYGDT3OPsNi
+      x2nBfPOppzDZdOJQbk+XPQ6Bj8u8FRkkd6gRSLQQbLLDe/C2IDhGxuFHeQWVvb7P
+      L/w7srAxH0SOVEJgn/8tD5D9FaoFN6NaUk34eb/tojZJpbydhx+eWFtBXtrxEtES
+      bGyTm2X7Q2VG36PqCwQdgdNwf6JUN8dIYotG+4rEJp1xsDqf7U8I5VoT1sE7rAY6
+      fEHuThHtENCd5JLqRiFqVSbSsxXhO5COofkUeXBfnUxD9/auSdwqX+6DdhS6HWcN
+      3P4nBLjlVM0M7P6t8fIQGwIDAQABo1wwWjBABgNVHR8EOTA3MDWgM6Axhi9odHRw
+      Oi8vYXBpY2EubW9zY293LmFsZmFpbnRyYS5uZXQvYXBpY2EuY3JsLnBlbTAJBgNV
+      HRMEAjAAMAsGA1UdDwQEAwIF4DANBgkqhkiG9w0BAQsFAAOCAgEANbGOlIxDFxfq
+      igiqWuRpnsg7vgqRbCSy1HpkTs8y2XNdG6jsxA3a42vQCWy74cXmEXrf7m9BQBh3
+      HIck4Ag5azo1+svwJmExhVx3P7RdmP4DuqO1XsWLPJmaeMWFDm71PO2N1vLOtsym
+      np71JPBV+x6mY9S0ecW37ZdrCUjKgWnxIijneLTF3NIkaNoB6WPdlasPF+KmATv8
+      eMuTZj27e9xLVikTC+5mBtM8mQiWYP4dStcOI7TO810/6PJkekjPYNV5ldzSif+E
+      R3y9U0x/sdaRmnR9vCw7geEKtum3JMv6uqYumaqMeB8ZEUEkZdgLFgGzDc10VuRO
+      wqN89qA8wQV7gN2nlQ7NdcrLcyq1NLH5EYP9AjgR47Ure93rOJvrr8w7c+WpYIGM
+      EjtMySrIiRtYtDrxTH/jZPUFoKRphyQ3s4Ja/86L8ONSBFm/F9TAGqrzaMrhHM1n
+      lX8fNl6BLBVFN7iDjvAzTCrIrG/fOh6MI1R1icbjiREWBzcij7lyENqLzQUZQiLx
+      SQLQ7dKd6YkjNmMl+TL4Z7HAyiaJzOuypKX5g6q+KoH10LXUB5pq+8tGI7J3K06l
+      rF28VZd8TPzOgll/N/Gz9Ce8eOoQG+dOS0Omv5Bz1cstue4I0+NuE+vVcQIkQPQT
+      YzGbty5dALrDx1II4VsZnzjmJaqzq98=
+      -----END CERTIFICATE-----
+    base-url: "https://apiws.alfabank.ru/alfabank/alfadevportal/"
+
+  alfa-stomp-api:
+    url: ws://stomp-server:8081/ws

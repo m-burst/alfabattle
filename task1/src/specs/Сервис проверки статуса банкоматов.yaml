@@ -1,0 +1,317 @@
+---
+swagger: "2.0"
+info:
+  x-ibm-name: atm-service
+  title: Сервис проверки статуса банкоматов
+  version: 1.0.0
+  description: Сервис, возвращающий информацию о банкоматах Альфа-Банка
+  contact:
+    name: Alfa-Bank API support
+    email: apisupport@alfabank.ru
+    url: https://api.alfabank.ru
+schemes:
+- https
+basePath: /atm-service
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+- clientIdHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  phase: realized
+paths:
+  /atms/status:
+    get:
+      responses:
+        200:
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/JSONResponse_BankATMStatus'
+      summary: Получение информации о доступности функций в банкоматах
+  /atms:
+    get:
+      responses:
+        200:
+          description: 200 OK
+          schema:
+            $ref: '#/definitions/JSONResponse_BankATMDetails'
+      summary: Получение статической информации о банкоматах
+definitions:
+  ATMAccess:
+    type: object
+    properties:
+      mode:
+        type: string
+        description: "Доступность АТМ для клиента, принимает следующие значения: \nalltime
+          = круглосуточно \nschedule = по расписанию работы организации. В этом случае
+          расписание указывается в поле schedule."
+        enum:
+        - alltime
+        - schedule
+        - noinfo
+      schedule:
+        type: string
+        description: |-
+          Указывается, если mode=schedule.
+          Массив [DD:hhmm–hhmm,DD:hhmm–hhmm,DD:hhmm–hhmm,…]
+          DD = [MO, TU, WE, TH, FR, SA, SU]
+          hh = 00..24
+          mm = 00..59
+          Время указывается местное (места установки АТМ)
+          Если в течение дня есть перерыв, то указывается каждый диапазон времени в течение одного дня. Например,
+          MO:0800-1300,MO:1400-2100,TU:0800-1300,TU:1400-2100
+  ATMDetails:
+    type: object
+    properties:
+      address:
+        description: Почтовый адрес АТМ
+        $ref: '#/definitions/PostAddress'
+      addressComments:
+        type: string
+        description: Вспомогательный текстовый комментарий, помогающий пользователю
+          найти АТМ. Например, «справа от входа в торговый комплекс с улицы Кораблестроителей»
+      availablePaymentSystems:
+        type: array
+        items:
+          type: string
+      cashInCurrencies:
+        type: array
+        description: Список кодов валют по общероссийскому классификатору, которые
+          АТМ поддерживает для внесения
+        items:
+          type: string
+      cashOutCurrencies:
+        type: array
+        description: Список кодов валют по общероссийскому классификатору, которые
+          АТМ поддерживает для выдачи
+        items:
+          type: string
+      coordinates:
+        description: Широта и долгота места установки АТМ
+        $ref: '#/definitions/Coordinates'
+      deviceId:
+        type: integer
+        format: int32
+        description: "Номер Terminal-ID, присвоенный АТМ в процессинге Банка и передаваемый
+          в информационном обмене между эквайрером, платежной системой и эмитентом.
+          \nЗначение соответствует ISO-8583 полю 41 (Card Acceptor Terminal Identification)"
+      nfc:
+        type: string
+      publicAccess:
+        type: string
+        description: "Доступ к АТМ. Значения:\n1 = в помещении кредитной организации
+          в открытом доступе \n2 = в помещении кредитной организации в ограниченном
+          доступе \n3 = вне помещения кредитной организации в открытом доступе \n4
+          = вне помещения кредитной организации в ограниченном доступе \n(значения
+          соответствуют правилам заполнения Ф-250 ЦБ РФ1) \n"
+      recordUpdated:
+        type: string
+        format: date-time
+        description: Дата/время получения последней информации из master-системы
+      services:
+        description: Функции, которыми обладает данный АТМ (значения соответствуют
+          Ф-250 ЦБ РФ)
+        $ref: '#/definitions/ATMServices'
+      supportInfo:
+        description: Информация о службе поддержке
+        $ref: '#/definitions/SupportInfo'
+      timeAccess:
+        description: Режим работы ATM
+        $ref: '#/definitions/ATMAccess'
+      timeShift:
+        type: integer
+        format: int32
+        description: Сдвиг времени региона установки конкретного АТМ, относительно
+          UTC. Например, 3
+    description: Статическая и редкоменяющаяся информация о банкомате
+  ATMServices:
+    type: object
+    properties:
+      cardCashIn:
+        type: string
+        description: Операции внесения наличных денежных средств с использованием
+          платежных карт и их реквизитов
+      cardCashOut:
+        type: string
+        description: Операция выдачи наличных с использованием платежных карт и их
+          реквизитов
+      cardPayments:
+        type: string
+        description: Платежи (оплата товаров и услуг) в пользу поставщиков услуг и
+          третьих лиц с использованием платежных карт и их реквизитов
+      cashIn:
+        type: string
+        description: Операции внесения наличных денежных средств БЕЗ использования
+          платежных карт и их реквизитов
+      cashOut:
+        type: string
+        description: Операция выдачи наличных БЕЗ использования платежных карт и их
+          реквизитов
+      payments:
+        type: string
+        description: Платежи (Оплата товаров и услуг) в пользу поставщиков услуг и
+          третьих лиц БЕЗ использования платежных карт и их реквизитов
+  ATMStatus:
+    type: object
+    properties:
+      availableNow:
+        description: Работоспособность АТМ по данным поставщика информации на момент
+          выполнения запроса
+        $ref: '#/definitions/AvailableNow'
+      deviceId:
+        type: integer
+        format: int32
+        description: "Номер Terminal-ID, присвоенный АТМ в процессинге Банка и передаваемый
+          в информационном обмене между эквайрером, платежной системой и эмитентом.
+          \nЗначение соответствует ISO-8583 полю 41 (Card Acceptor Terminal Identification)"
+      recordUpdated:
+        type: string
+        format: date-time
+        description: Дата/время получения последней информации из master-системы
+    description: Информация по доступности функций АТМ
+  AvailableNow:
+    type: object
+    properties:
+      cashIn:
+        type: string
+        description: "Доступность АТМ клиенту для внесения денег (функция внесения
+          денег), заполняется для устройств, обладающих функцией приема денег. \nY
+          = АТМ позволяет внести деньги \nN = АТМ не позволяет внести деньги (поломка,
+          иная причина) \nZ = нет информации о статусе данной функции АТМ \n"
+      cashOut:
+        type: string
+        description: "Доступность АТМ клиенту для получения денег (функция выдачи
+          денег), заполняется для устройств, обладающих функцией выдачи денег. \nY
+          = АТМ выдает деньги (деньги получить можно) \nN = АТМ не выдает деньги (закончились,
+          поломка) \nZ = нет информации о статусе данной функции АТМ \n"
+      online:
+        type: string
+        description: "Текущий статус работоспособности АТМ для клиента \nY = АТМ открыт
+          и на связи, хотя бы одна из его функций доступна \nN = АТМ закрыт или не
+          на связи, клиент не может совершать операции с АТМ \nZ = нет информации
+          о статусе АТМ"
+      payments:
+        type: string
+        description: "Доступность АТМ клиенту для оплаты (функция оплаты товаров и
+          услуг), заполняется для устройств, обладающих функцией оплаты. \nY = АТМ
+          позволяет оплатить (сделать хотя бы один платеж) \nN = АТМ не позволяет
+          провести оплату (поломка, иная причина) \nZ = нет информации о статусе данной
+          функции АТМ"
+  BankATMDetails:
+    type: object
+    properties:
+      atms:
+        type: array
+        description: Список банкоматов
+        items:
+          $ref: '#/definitions/ATMDetails'
+      bankLicense:
+        type: string
+        description: Номер лицензии Альфа-Банка
+  BankATMStatus:
+    type: object
+    properties:
+      atms:
+        type: array
+        description: Список статусов банкоматов
+        items:
+          $ref: '#/definitions/ATMStatus'
+      bankLicense:
+        type: string
+        description: Номер лицензии Альфа-Банка
+  Coordinates:
+    type: object
+    properties:
+      latitude:
+        type: string
+        description: Широта
+      longitude:
+        type: string
+        description: Долгота
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        description: Код ошибки
+      message:
+        type: string
+        description: Сообщение об ошибке
+  JSONResponse_BankATMDetails:
+    type: object
+    properties:
+      data:
+        description: Данные
+        $ref: '#/definitions/BankATMDetails'
+      error:
+        description: Информация об ошибке в слчуае если success = false
+        $ref: '#/definitions/Error'
+      success:
+        type: boolean
+        example: false
+        description: Успешность выполнения запроса
+      total:
+        type: integer
+        format: int32
+        description: Общее количество элементов в списке, если в атрибуте data передается
+          список
+  JSONResponse_BankATMStatus:
+    type: object
+    properties:
+      data:
+        description: Данные
+        $ref: '#/definitions/BankATMStatus'
+      error:
+        description: Информация об ошибке в слчуае если success = false
+        $ref: '#/definitions/Error'
+      success:
+        type: boolean
+        example: false
+        description: Успешность выполнения запроса
+      total:
+        type: integer
+        format: int32
+        description: Общее количество элементов в списке, если в атрибуте data передается
+          список
+  PostAddress:
+    type: object
+    properties:
+      city:
+        type: string
+      location:
+        type: string
+      mode:
+        type: string
+        enum:
+        - FIAS
+        - KLADR
+        - OtherDictionary
+        - HandMade
+  SupportInfo:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Адрес электронной почты
+      other:
+        type: string
+        description: Иные контакты поддержки
+      phone:
+        type: string
+        description: Телефон
+x-ibm-endpoints:
+- endpointUrl: https://apiws.alfabank.ru/alfabank/alfadevportal
+  description: TLS RSA
+  type:
+  - production
+  - development
+...

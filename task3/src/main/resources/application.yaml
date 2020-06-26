@@ -1,0 +1,7 @@
+server.port: 8080
+
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres:5432/db'
+    username: 'admin'
+    password: '12345'
