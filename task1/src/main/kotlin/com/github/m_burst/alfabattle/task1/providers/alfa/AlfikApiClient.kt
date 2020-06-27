@@ -46,7 +46,7 @@ class AlfikApiClient(
                     try {
                         session.send(destination, request)
                         break
-                    } catch (e: IllegalStateException) {
+                    } catch (e: java.lang.IllegalStateException) {
                         log.warn("Try to send again", e)
                         delay(timeMillis = 100L)
                     }
