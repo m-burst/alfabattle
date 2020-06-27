@@ -66,5 +66,5 @@ application:
       -----END CERTIFICATE-----
     base-url: "https://apiws.alfabank.ru/alfabank/alfadevportal/"
 
-  alfa-stomp-api:
-    url: ws://stomp-server:8081/ws
+  alfik-api:
+    url: ws://localhost:8100

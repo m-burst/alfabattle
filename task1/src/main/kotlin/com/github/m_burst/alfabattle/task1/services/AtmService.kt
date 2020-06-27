@@ -1,6 +1,7 @@
 package com.github.m_burst.alfabattle.task1.services
 
 import com.github.m_burst.alfabattle.task1.providers.alfa.AlfaApiClient
+import com.github.m_burst.alfabattle.task1.providers.alfa.AlfikApiClient
 import com.github.m_burst.alfabattle.task1.providers.alfa.atm.model.ATMDetails
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -9,7 +10,8 @@ class AtmNotFoundException : Exception()
 
 @Service
 class AtmService(
-    private val alfaApiClient: AlfaApiClient
+    private val alfaApiClient: AlfaApiClient,
+    private val alfikApiClient: AlfikApiClient
 ) {
 
     private val atmList by lazy(::loadAtmData)
@@ -29,13 +31,20 @@ class AtmService(
             if (onlyWithPayments) atmListWithPayments
             else atmList
 
-        return listToSearch.minBy { atm ->
-            // if atm doesn't have latitude or longitude, it cannot be nearest
-            val atmLatitude = atm.coordinates?.latitude?.toBigDecimal() ?: return@minBy INFINITY
-            val atmLongitude = atm.coordinates.longitude?.toBigDecimal() ?: return@minBy INFINITY
+        return listToSearch.minBy { it.distanceSquared(latitude, longitude) }
+            ?: throw AtmNotFoundException()
+    }
 
-            (latitude - atmLatitude).pow(2) + (longitude - atmLongitude).pow(2)
-        } ?: throw AtmNotFoundException()
+    fun findNearestWithAlfik(latitude: BigDecimal, longitude: BigDecimal, alfikCount: Long): List<ATMDetails> {
+        val sortedByDistance = atmList.sortedBy { it.distanceSquared(latitude, longitude) }
+        var atmCount = 0
+        var remainingAlfiks = alfikCount
+        while (remainingAlfiks > 0) {
+            atmCount++
+            val currentAtm = sortedByDistance[atmCount - 1]
+            remainingAlfiks -= alfikApiClient.getAlfikCount(currentAtm.deviceId)
+        }
+        return sortedByDistance.take(atmCount)
     }
 
     private fun loadAtmData(): List<ATMDetails> {
@@ -51,5 +60,13 @@ class AtmService(
 
         private val ATMDetails.hasPayments: Boolean
             get() = services?.payments == "Y"
+
+        private fun ATMDetails.distanceSquared(latitude: BigDecimal, longitude: BigDecimal): BigDecimal {
+            // if atm doesn't have latitude or longitude, it cannot be nearest
+            val atmLatitude = coordinates?.latitude?.toBigDecimal() ?: return INFINITY
+            val atmLongitude = coordinates.longitude?.toBigDecimal() ?: return INFINITY
+
+            return (latitude - atmLatitude).pow(2) + (longitude - atmLongitude).pow(2)
+        }
     }
 }

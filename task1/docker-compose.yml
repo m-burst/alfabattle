@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  alfa-battle-task1-websocket:
+    image: arpmipg/alfa-battle:task1-websocket
+    ports:
+      - 8100:8100

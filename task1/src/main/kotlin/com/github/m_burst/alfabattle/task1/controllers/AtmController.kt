@@ -33,4 +33,18 @@ class AtmController(
         )
         return AtmDto.of(atmDetails)
     }
+
+    @GetMapping("/atms/nearest-with-alfik")
+    fun findNearestWithAlfik(
+        @RequestParam("latitude") latitude: BigDecimal,
+        @RequestParam("longitude") longitude: BigDecimal,
+        @RequestParam("alfik") alfikCount: Long
+    ): List<AtmDto> {
+        val atmDetails = atmService.findNearestWithAlfik(
+            latitude = latitude,
+            longitude = longitude,
+            alfikCount = alfikCount
+        )
+        return atmDetails.map { AtmDto.of(it) }
+    }
 }
