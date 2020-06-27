@@ -2,6 +2,7 @@ package com.github.m_burst.alfabattle.task2.dto
 
 import com.github.m_burst.alfabattle.task2.services.CategoryAnalytics
 import com.github.m_burst.alfabattle.task2.services.UserAnalytics
+import com.github.m_burst.alfabattle.task2.services.UserCategoryStats
 
 data class UserAnalyticsDto(
     val userId: String,
@@ -32,6 +33,24 @@ data class CategoryAnalyticsDto(
                 min = categoryAnalytics.min.toDouble(),
                 max = categoryAnalytics.max.toDouble(),
                 sum = categoryAnalytics.sum.toDouble()
+            )
+        }
+    }
+}
+
+data class UserCategoryStatsDto(
+    val oftenCategoryId: Int,
+    val rareCategoryId: Int,
+    val maxAmountCategoryId: Int,
+    val minAmountCategoryId: Int
+) {
+    companion object {
+        fun of(stats: UserCategoryStats): UserCategoryStatsDto {
+            return UserCategoryStatsDto(
+                oftenCategoryId = stats.oftenCategoryId,
+                rareCategoryId = stats.rareCategoryId,
+                maxAmountCategoryId = stats.maxAmountCategoryId,
+                minAmountCategoryId = stats.minAmountCategoryId
             )
         }
     }
