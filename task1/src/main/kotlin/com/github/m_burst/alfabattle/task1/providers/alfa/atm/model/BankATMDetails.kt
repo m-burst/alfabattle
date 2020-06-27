@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class BankATMDetails (
     /* Список банкоматов */
     @JsonProperty("atms")
-    val atms: kotlin.Array<ATMDetails>? = null,
+    val atms: kotlin.Array<ATMDetails>,
     /* Номер лицензии Альфа-Банка */
     @JsonProperty("bankLicense")
     val bankLicense: kotlin.String? = null
