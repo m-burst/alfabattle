@@ -28,6 +28,9 @@ dependencies {
     implementation(Dependencies.postgresqlDriver)
     implementation(Dependencies.Exposed.core)
     implementation(Dependencies.Exposed.jdbc)
+    implementation(Dependencies.Exposed.javaTime)
+
+    implementation(Dependencies.ApacheCommons.math3)
 
     testImplementation(Dependencies.SpringBoot.starterTest)
 }
