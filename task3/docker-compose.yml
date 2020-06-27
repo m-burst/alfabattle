@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  alfa-battle-task3:
+    build: pg
+    environment:
+      POSTGRES_DB: alfa_battle
+      POSTGRES_USER: alfa_battle
+      POSTGRES_PASSWORD: qwe123
+    ports:
+      - 5432:5432

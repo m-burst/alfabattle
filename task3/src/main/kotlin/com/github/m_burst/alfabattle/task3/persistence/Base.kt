@@ -9,8 +9,8 @@ abstract class IdTable<T : Any>(name: String) : Table(name) {
     override val primaryKey by lazy { PrimaryKey(id) }
 }
 
-abstract class LongIdTable(name: String) : IdTable<Long>(name) {
-    final override val id: Column<Long> = long("id").autoIncrement()
+abstract class IntIdTable(name: String) : IdTable<Int>(name) {
+    final override val id: Column<Int> = integer("id").autoIncrement()
 }
 
 abstract class TableDao<E : Any, T : Table>(open val table: T) {
@@ -69,4 +69,4 @@ abstract class IdTableDao<E : Any, Id : Comparable<Id>, T : IdTable<Id>>(overrid
     fun delete(id: Id): Unit = deleteWhere { table.id eq id }
 }
 
-abstract class LongIdTableDao<E : Any, T : LongIdTable>(override val table: T) : IdTableDao<E, Long, T>(table)
+abstract class IntIdTableDao<E : Any, T : IntIdTable>(override val table: T) : IdTableDao<E, Int, T>(table)
