@@ -14,13 +14,11 @@ class LoansController(
     private val loanService: LoanService
 ) {
 
-    @PostMapping("/loans/loadPersons")
     @PutMapping("/loans/loadPersons")
     fun loadPersons(): LoadResultDto {
         return LoadResultDto(status = "OK")
     }
 
-    @PostMapping("/loans/loadLoans")
     @PutMapping("/loans/loadLoans")
     fun loadLoans(): LoadResultDto {
         return LoadResultDto(status = "OK")
