@@ -13,4 +13,8 @@ class LoanService(
     fun getLoan(loanId: String): Loan {
         return loanRepository.findById(loanId).orElseThrow { LoanNotFoundException() }
     }
+
+    fun getLoanHistory(documentId: String): List<Loan> {
+        return loanRepository.findAllByDocid(documentId)
+    }
 }

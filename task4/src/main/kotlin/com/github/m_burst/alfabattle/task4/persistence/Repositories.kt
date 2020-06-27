@@ -8,4 +8,6 @@ interface PersonRepository : ElasticsearchRepository<Person, String> {
     fun findByDocid(docid: String): Person?
 }
 
-interface LoanRepository : ElasticsearchRepository<Loan, String>
+interface LoanRepository : ElasticsearchRepository<Loan, String> {
+    fun findAllByDocid(docid: String): List<Loan>
+}

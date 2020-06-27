@@ -21,3 +21,19 @@ data class LoanDto(
         }
     }
 }
+
+data class LoanHistoryDto(
+    val countLoans: Int,
+    val sumAmountLoans: Double,
+    val loans: List<LoanDto>
+) {
+    companion object {
+        fun of(loans: List<Loan>): LoanHistoryDto {
+            return LoanHistoryDto(
+                countLoans = loans.size,
+                sumAmountLoans = loans.sumByDouble { it.amount },
+                loans = loans.map { LoanDto.of(it) }
+            )
+        }
+    }
+}
