@@ -24,14 +24,14 @@ class LoansController(
         return LoadResultDto(status = "OK")
     }
 
-    @GetMapping("/loans/getPerson/{documentId}/")
+    @GetMapping("/loans/getPerson/{documentId}/", "/loans/getPerson/{documentId}")
     fun getPerson(
         @PathVariable("documentId") documentId: String
     ): PersonDto {
         return PersonDto.of(personService.getPerson(documentId))
     }
 
-    @GetMapping("/loans/getLoan/{loanId}")
+    @GetMapping("/loans/getLoan/{loanId}/", "/loans/getLoan/{loanId}")
     fun getLoan(
         @PathVariable("loanId") loanId: String
     ): LoanDto {
