@@ -36,7 +36,7 @@ class AlfikApiClient(
             log.info("Connecting to ${properties.url}")
             val session = stompSessionFactory.newSession(properties.url)
             session.use {
-                val destination = "/alfik"
+                val destination = "/"
                 log.info("Sending $request to $destination")
                 convertAndSend(destination, request)
 
