@@ -1,20 +1,24 @@
 package com.github.m_burst.alfabattle.task1.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.m_burst.alfabattle.util.StompSessionFactory
-import org.hildan.krossbow.stomp.StompClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.integration.config.EnableIntegration
+import org.springframework.messaging.converter.MappingJackson2MessageConverter
+import org.springframework.web.socket.client.jetty.JettyWebSocketClient
+import org.springframework.web.socket.messaging.WebSocketStompClient
 
 @Configuration
+@EnableIntegration
 class StompClientConfiguration {
 
     @Bean
-    fun stompClient(): StompClient = StompClient()
-
-    @Bean
-    fun stompSessionFactory(
-        stompClient: StompClient,
+    fun stompClient(
         objectMapper: ObjectMapper
-    ): StompSessionFactory = StompSessionFactory(stompClient, objectMapper)
+    ): WebSocketStompClient {
+        val websocketClient = JettyWebSocketClient()
+        val stompClient = WebSocketStompClient(websocketClient)
+        stompClient.messageConverter = MappingJackson2MessageConverter().also { it.objectMapper = objectMapper }
+        return stompClient
+    }
 }

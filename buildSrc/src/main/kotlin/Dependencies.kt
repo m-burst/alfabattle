@@ -56,8 +56,8 @@ object Dependencies {
         const val moduleKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:$version"
     }
 
-    object Krossbow {
-        const val version = "0.21.1"
-        const val stompJackson = "org.hildan.krossbow:krossbow-stomp-jackson:$version"
+    object SpringIntegration {
+        const val version = "5.3.1.RELEASE"
+        const val stomp = "org.springframework.integration:spring-integration-stomp:$version"
     }
 }

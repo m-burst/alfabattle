@@ -22,6 +22,7 @@ docker {
 dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.7")
 
     implementation(Dependencies.SpringBoot.starterWebsocket)
     implementation(Dependencies.SpringBoot.starterJetty)
@@ -31,7 +32,7 @@ dependencies {
     implementation(Dependencies.Retrofit.converterJackson)
     implementation(Dependencies.Netty.handler)
 
-    implementation(Dependencies.Krossbow.stompJackson)
+    implementation(Dependencies.SpringIntegration.stomp)
 
     testImplementation(Dependencies.SpringBoot.starterTest)
 }

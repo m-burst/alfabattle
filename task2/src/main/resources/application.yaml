@@ -4,4 +4,4 @@ spring:
   kafka:
     bootstrap-servers: broker:9092
     consumer:
-      group-id: 'app'
+      group-id: 'consumer-${random.uuid}'
