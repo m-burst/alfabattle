@@ -1,6 +1,7 @@
 package com.github.m_burst.alfabattle.task2.dto
 
 import com.github.m_burst.alfabattle.task2.services.CategoryAnalytics
+import com.github.m_burst.alfabattle.task2.services.PaymentTemplate
 import com.github.m_burst.alfabattle.task2.services.UserAnalytics
 import com.github.m_burst.alfabattle.task2.services.UserCategoryStats
 
@@ -51,6 +52,22 @@ data class UserCategoryStatsDto(
                 rareCategoryId = stats.rareCategoryId,
                 maxAmountCategoryId = stats.maxAmountCategoryId,
                 minAmountCategoryId = stats.minAmountCategoryId
+            )
+        }
+    }
+}
+
+data class PaymentTemplateDto(
+    val recipientId: String,
+    val categoryId: Int,
+    val amount: Double
+) {
+    companion object {
+        fun of(paymentTemplate: PaymentTemplate): PaymentTemplateDto {
+            return PaymentTemplateDto(
+                recipientId = paymentTemplate.recipientId,
+                categoryId = paymentTemplate.categoryId,
+                amount = paymentTemplate.amount.toDouble()
             )
         }
     }

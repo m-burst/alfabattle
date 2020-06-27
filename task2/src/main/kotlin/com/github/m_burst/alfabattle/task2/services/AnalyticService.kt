@@ -59,16 +59,39 @@ data class UserCategoryStats(
     val minAmountCategoryId: Int
 )
 
+data class PaymentTemplate(
+    val recipientId: String,
+    val categoryId: Int,
+    val amount: BigDecimal
+) {
+    companion object {
+        fun of(payment: Payment): PaymentTemplate {
+            return PaymentTemplate(
+                recipientId = payment.recipientId,
+                categoryId = payment.categoryId,
+                amount = payment.amount
+            )
+        }
+    }
+}
+
 class UserNotFoundException : Exception()
 
 @Service
 class AnalyticService {
 
     private val userIdToAnalytics = mutableMapOf<String, UserAnalytics>()
+    private val userIdToTemplates = mutableMapOf<String, MutableMap<PaymentTemplate, Int>>()
 
     fun addPayment(payment: Payment) {
         userIdToAnalytics.compute(payment.userId) { _, existing ->
             existing?.let { it += payment; it } ?: UserAnalytics.of(payment)
+        }
+
+        val userTemplates = userIdToTemplates.computeIfAbsent(payment.userId) { mutableMapOf() }
+        val template = PaymentTemplate.of(payment)
+        userTemplates.compute(template) { _, currentCount ->
+            (currentCount ?: 0) + 1
         }
     }
 
@@ -88,6 +111,13 @@ class AnalyticService {
             maxAmountCategoryId = categoryAnalytics.maxKey { it.sum },
             minAmountCategoryId = categoryAnalytics.minKey { it.sum }
         )
+    }
+
+    fun getUserTemplates(userId: String): List<PaymentTemplate> {
+        val templateToCountMap = userIdToTemplates[userId] ?: throw UserNotFoundException()
+        return templateToCountMap.mapNotNull { (template, count) ->
+            if (count < 3) null else template
+        }
     }
 
     private inline fun <K, V, S : Comparable<S>> Map<K, V>.maxKey(selector: (V) -> S): K {

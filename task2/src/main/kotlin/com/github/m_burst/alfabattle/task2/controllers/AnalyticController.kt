@@ -1,5 +1,6 @@
 package com.github.m_burst.alfabattle.task2.controllers
 
+import com.github.m_burst.alfabattle.task2.dto.PaymentTemplateDto
 import com.github.m_burst.alfabattle.task2.dto.UserAnalyticsDto
 import com.github.m_burst.alfabattle.task2.dto.UserCategoryStatsDto
 import com.github.m_burst.alfabattle.task2.services.AnalyticService
@@ -31,5 +32,12 @@ class AnalyticController(
         @PathVariable("userId") userId: String
     ): UserCategoryStatsDto {
         return UserCategoryStatsDto.of(analyticService.getUserCategoryStats(userId))
+    }
+
+    @GetMapping("/analytic/{userId}/templates")
+    fun getTemplates(
+        @PathVariable("userId") userId: String
+    ): List<PaymentTemplateDto> {
+        return analyticService.getUserTemplates(userId).map { PaymentTemplateDto.of(it) }
     }
 }
