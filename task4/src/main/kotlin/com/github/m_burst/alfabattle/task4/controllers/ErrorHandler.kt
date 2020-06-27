@@ -13,6 +13,6 @@ class ErrorHandler {
     @ExceptionHandler(PersonNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleAtmNotFound(e: PersonNotFoundException): ErrorDto {
-        return ErrorDto("user not found")
+        return ErrorDto("person not found")
     }
 }
