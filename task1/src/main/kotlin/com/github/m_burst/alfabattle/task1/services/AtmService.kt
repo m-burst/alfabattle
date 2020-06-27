@@ -3,6 +3,7 @@ package com.github.m_burst.alfabattle.task1.services
 import com.github.m_burst.alfabattle.task1.providers.alfa.AlfaApiClient
 import com.github.m_burst.alfabattle.task1.providers.alfa.atm.model.ATMDetails
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 class AtmNotFoundException : Exception()
 
@@ -11,17 +12,44 @@ class AtmService(
     private val alfaApiClient: AlfaApiClient
 ) {
 
-    private val idToAtmMap by lazy(::loadAtmData)
+    private val atmList by lazy(::loadAtmData)
+    private val atmListWithPayments by lazy {
+        atmList.filter { it.hasPayments }
+    }
+    private val idToAtmMap by lazy {
+        atmList.associateBy { it.deviceId }
+    }
 
     fun getAtmDetails(id: Int): ATMDetails {
         return idToAtmMap[id] ?: throw AtmNotFoundException()
     }
 
-    private fun loadAtmData(): Map<Int, ATMDetails> {
+    fun findNearest(latitude: BigDecimal, longitude: BigDecimal, onlyWithPayments: Boolean): ATMDetails {
+        val listToSearch =
+            if (onlyWithPayments) atmListWithPayments
+            else atmList
+
+        return listToSearch.minBy { atm ->
+            // if atm doesn't have latitude or longitude, it cannot be nearest
+            val atmLatitude = atm.coordinates?.latitude?.toBigDecimal() ?: return@minBy INFINITY
+            val atmLongitude = atm.coordinates.longitude?.toBigDecimal() ?: return@minBy INFINITY
+
+            (latitude - atmLatitude).pow(2) + (longitude - atmLongitude).pow(2)
+        } ?: throw AtmNotFoundException()
+    }
+
+    private fun loadAtmData(): List<ATMDetails> {
         val response = alfaApiClient.atmsGet().execute()
         check(response.isSuccessful)
         val body = response.body()
         check(body != null && body.success == true && body.data != null)
-        return body.data.atms.associateBy { it.deviceId }
+        return body.data.atms.toList()
+    }
+
+    companion object {
+        private val INFINITY: BigDecimal = BigDecimal.valueOf(1, -100)
+
+        private val ATMDetails.hasPayments: Boolean
+            get() = services?.payments == "Y"
     }
 }
