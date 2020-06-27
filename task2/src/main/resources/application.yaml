@@ -2,6 +2,7 @@ server.port: 8081
 
 spring:
   kafka:
-    bootstrap-servers: broker:9092
+    bootstrap-servers: localhost:29092
     consumer:
       group-id: 'consumer-${random.uuid}'
+      auto-offset-reset: earliest
