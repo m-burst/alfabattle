@@ -38,6 +38,7 @@ object Dependencies {
         const val version = "0.24.1"
         const val core = "org.jetbrains.exposed:exposed-core:$version"
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc:$version"
+        const val javaTime = "org.jetbrains.exposed:exposed-java-time:$version"
     }
 
     object Retrofit {
@@ -59,5 +60,9 @@ object Dependencies {
     object SpringIntegration {
         const val version = "5.3.1.RELEASE"
         const val stomp = "org.springframework.integration:spring-integration-stomp:$version"
+    }
+
+    object ApacheCommons {
+        const val math3 = "org.apache.commons:commons-math3:3.6.1"
     }
 }
